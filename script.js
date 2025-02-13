@@ -1,8 +1,8 @@
 let c = document.querySelector('canvas'),
     $ = c.getContext('2d'),
-    w = c.width = innerWidth,
-    h = c.height = innerHeight,
-    random = Math.random
+    w = c.width = window.innerWidth,
+    h = c.height = window.innerHeight,
+    random = Math.random;
 
 $.fillStyle = 'black'
 $.fillRect(0, 0, w, h)
@@ -16,8 +16,8 @@ let scaleAndTranslate = function (pos, sx, sy, dx, dy) {
 }
 
 window.addEventListener('resize', function () {
-    w = c.width = innerWidth
-    h = c.height = innerHeight
+    w = c.width = window.innerWidth
+    h = c.height = window.innerHeight
     $.fillStyle = 'black'
     $.fillRect(0, 0, w, h)
 })
@@ -78,33 +78,36 @@ let config = {
 let time = 0
 
 // Текст для отрисовки
-let text = "Я люблю тебя, несмотря ни на что!!!";
-let fontSize = 80; // Начальный размер шрифта
+let textTop = "Валя. Я люблю тебя!!!";
+let textBottom = "Несмотря ни на что.";
+let fontSize = Math.min(w * 0.1, 40); // Адаптивный размер шрифта
 let textAlpha = 0.8; // Прозрачность текста
-let neonColor = '#ff00ff'; // Неоновый цвет (розовый)
-let neonGlow = '#ff00ff'; // Цвет свечения
+let neonColor = '#00ffff'; // Неоновый голубой цвет
+let neonGlow = '#00ffff'; // Цвет свечения
 
 // Музыка
 const backgroundMusic = document.getElementById('background-music');
 
-// Функция для запуска музыки
-function playMusic() {
-    if (backgroundMusic.paused) {
-        backgroundMusic.play().catch(error => {
-            console.log("Музыка не может быть воспроизведена. Ошибка:", error);
-        });
-    }
+// Кнопка запуска
+const startButton = document.getElementById('start-button');
+const startButtonContainer = document.getElementById('start-button-container');
+
+// Функция для запуска анимации и музыки
+function startAnimation() {
+    // Скрываем кнопку
+    startButtonContainer.style.display = 'none';
+
+    // Запускаем музыку
+    backgroundMusic.play().catch(error => {
+        console.log("Музыка не может быть воспроизведена. Ошибка:", error);
+    });
+
+    // Запускаем анимацию
+    loop();
 }
 
-// Запуск музыки по клику на canvas
-c.addEventListener('click', () => {
-    playMusic();
-});
-
-// Запуск музыки по любому взаимодействию с документом
-document.addEventListener('click', () => {
-    playMusic();
-});
+// Обработчик клика на кнопку
+startButton.addEventListener('click', startAnimation);
 
 let loop = function () {
     let n = -Math.cos(time)
@@ -171,7 +174,12 @@ let loop = function () {
     $.shadowBlur = 20;
     $.shadowColor = neonGlow;
     $.fillStyle = neonColor;
-    $.fillText(text, w / 2, h / 2 - 200); // Позиция текста выше сердца
+
+    // Текст сверху сердца
+    $.fillText(textTop, w / 2, h / 2 - 200); // Позиция текста выше сердца
+
+    // Текст снизу сердца
+    $.fillText(textBottom, w / 2, h / 2 + 200); // Позиция текста ниже сердца
     
     // Сброс теней для остальной анимации
     $.shadowBlur = 0;
@@ -179,5 +187,3 @@ let loop = function () {
     
     requestAnimationFrame(loop, c)
 }
-
-loop()

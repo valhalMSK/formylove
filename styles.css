@@ -13,4 +13,32 @@ body, html {
 
 #canvas {
     display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none; /* Отключаем масштабирование на мобильных устройствах */
+}
+
+#start-button-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+#start-button {
+    padding: 15px 30px;
+    font-size: 20px;
+    color: #001f3f; /* Темно-синий цвет текста */
+    background-color: #00ffff; /* Неоновый голубой фон */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Тень для текста */
+}
+
+#start-button:hover {
+    background-color: #00cccc; /* Цвет фона при наведении */
+    color: #000000; /* Черный цвет текста при наведении */
 }
