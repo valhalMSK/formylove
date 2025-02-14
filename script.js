@@ -78,8 +78,8 @@ let config = {
 let time = 0
 
 // Текст для отрисовки
-let textTop = "Валя. Я люблю тебя!!!";
-let textBottom = "Несмотря ни на что.";
+let textTop = "!!!";
+let textBottom = "";
 let fontSize = Math.min(w * 0.1, 40); // Адаптивный размер шрифта
 let textAlpha = 0.8; // Прозрачность текста
 let neonColor = '#00ffff'; // Неоновый голубой цвет
